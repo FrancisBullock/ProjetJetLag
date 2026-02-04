@@ -1,4 +1,4 @@
-// src/Controller/GameController.php
+
 namespace App\Controller;
 
 use App\Entity\Question;
@@ -21,6 +21,7 @@ class GameController extends AbstractController
                 $cardsToDraw = 1;
                 $cardsToKeep = 1;
                 break;
+                //Ces deux catégories donnent les mèmes récompenses dans le jeu
             case 'Thermometer'||'Radar':
                 $cardsToDraw = 2;
                 $cardsToKeep = 1;

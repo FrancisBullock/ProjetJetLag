@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GameSessionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,17 @@ class GameSession
 
     #[ORM\OneToOne(mappedBy: 'gameSession', cascade: ['persist', 'remove'])]
     private ?Deck $deck = null;
+
+    /**
+     * @var Collection<int, Question>
+     */
+    #[ORM\ManyToMany(targetEntity: Question::class)]
+    private Collection $consumedQuestions;
+
+    public function __construct()
+    {
+        $this->consumedQuestions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -70,6 +83,30 @@ class GameSession
         }
 
         $this->deck = $deck;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getConsumedQuestions(): Collection
+    {
+        return $this->consumedQuestions;
+    }
+
+    public function addConsumedQuestion(Question $consumedQuestion): static
+    {
+        if (!$this->consumedQuestions->contains($consumedQuestion)) {
+            $this->consumedQuestions->add($consumedQuestion);
+        }
+
+        return $this;
+    }
+
+    public function removeConsumedQuestion(Question $consumedQuestion): static
+    {
+        $this->consumedQuestions->removeElement($consumedQuestion);
 
         return $this;
     }
