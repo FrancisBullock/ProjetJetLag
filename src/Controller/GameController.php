@@ -1,7 +1,8 @@
-
+<?php
 namespace App\Controller;
 
 use App\Entity\Question;
+use App\Entity\User;
 use App\Repository\CardRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
